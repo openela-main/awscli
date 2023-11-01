@@ -1,0 +1,98 @@
+diff -uNr a/awscli/customizations/cloudfront.py b/awscli/customizations/cloudfront.py
+--- a/awscli/customizations/cloudfront.py	2017-08-12 01:39:00.000000000 +0200
++++ b/awscli/customizations/cloudfront.py	2018-01-05 09:40:09.445445687 +0100
+@@ -14,7 +14,9 @@
+ import time
+ import random
+ 
+-import rsa
++from cryptography.hazmat.primitives import serialization, hashes
++from cryptography.hazmat.primitives.asymmetric import padding
++from cryptography.hazmat.backends import default_backend
+ from botocore.utils import parse_to_aware_datetime
+ from botocore.signers import CloudFrontSigner
+ 
+@@ -254,7 +256,10 @@
+ 
+ class RSASigner(object):
+     def __init__(self, private_key):
+-        self.priv_key = rsa.PrivateKey.load_pkcs1(private_key.encode('utf8'))
++        self.priv_key = serialization.load_pem_private_key(
++            private_key.encode('utf8'), password=None,
++            backend=default_backend())
+ 
+     def sign(self, message):
+-        return rsa.sign(message, self.priv_key, 'SHA-1')
++        return self.priv_key.sign(
++            message, padding.PKCS1v15(), hashes.SHA1())
+diff -uNr a/awscli/customizations/cloudtrail/validation.py b/awscli/customizations/cloudtrail/validation.py
+--- a/awscli/customizations/cloudtrail/validation.py	2017-08-12 01:39:00.000000000 +0200
++++ b/awscli/customizations/cloudtrail/validation.py	2018-01-04 17:04:38.869212582 +0100
+@@ -22,8 +22,10 @@
+ from datetime import datetime, timedelta
+ from dateutil import tz, parser
+ 
+-from pyasn1.error import PyAsn1Error
+-import rsa
++from cryptography.hazmat.primitives import serialization, hashes
++from cryptography.hazmat.backends import default_backend
++from cryptography.hazmat.primitives.asymmetric import padding
++from cryptography.exceptions import InvalidSignature
+ 
+ from awscli.customizations.cloudtrail.utils import get_trail_by_arn, \
+     get_account_id_from_arn
+@@ -530,20 +532,18 @@
+         """
+         try:
+             decoded_key = base64.b64decode(public_key)
+-            public_key = rsa.PublicKey.load_pkcs1(decoded_key, format='DER')
++            public_key = serialization.load_der_public_key(decoded_key,
++                backend=default_backend())
+             to_sign = self._create_string_to_sign(digest_data, inflated_digest)
+             signature_bytes = binascii.unhexlify(digest_data['_signature'])
+-            rsa.verify(to_sign, signature_bytes, public_key)
+-        except PyAsn1Error:
++            public_key.verify(signature_bytes, to_sign, padding.PKCS1v15(),
++                hashes.SHA256())
++        except (ValueError, TypeError):
+             raise DigestError(
+                 ('Digest file\ts3://%s/%s\tINVALID: Unable to load PKCS #1 key'
+                  ' with fingerprint %s')
+                 % (bucket, key, digest_data['digestPublicKeyFingerprint']))
+-        except rsa.pkcs1.VerificationError:
+-            # Note from the Python-RSA docs: Never display the stack trace of
+-            # a rsa.pkcs1.VerificationError exception. It shows where in the
+-            # code the exception occurred, and thus leaks information about
+-            # the key.
++        except InvalidSignature:
+             raise DigestSignatureError(bucket, key)
+ 
+     def _create_string_to_sign(self, digest_data, inflated_digest):
+diff -uNr a/awscli/customizations/ec2/decryptpassword.py b/awscli/customizations/ec2/decryptpassword.py
+--- a/awscli/customizations/ec2/decryptpassword.py	2017-08-12 01:39:00.000000000 +0200
++++ b/awscli/customizations/ec2/decryptpassword.py	2018-01-04 16:24:42.565140244 +0100
+@@ -13,7 +13,9 @@
+ import logging
+ import os
+ import base64
+-import rsa
++from cryptography.hazmat.primitives import serialization
++from cryptography.hazmat.backends import default_backend
++from cryptography.hazmat.primitives.asymmetric import padding
+ from awscli.compat import six
+ 
+ from botocore import model
+@@ -109,9 +111,11 @@
+             try:
+                 with open(self._key_path) as pk_file:
+                     pk_contents = pk_file.read()
+-                    private_key = rsa.PrivateKey.load_pkcs1(six.b(pk_contents))
++                    private_key = serialization.load_pem_private_key(
++                        six.b(pk_contents), password=None,
++                        backend=default_backend())
+                     value = base64.b64decode(value)
+-                    value = rsa.decrypt(value, private_key)
++                    value = private_key.decrypt(value, padding.PKCS1v15())
+                     logger.debug(parsed)
+                     parsed['PasswordData'] = value.decode('utf-8')
+                     logger.debug(parsed)

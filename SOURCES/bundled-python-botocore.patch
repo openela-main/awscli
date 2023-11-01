@@ -1,0 +1,720 @@
+diff --color -uNr a/awscli/alias.py b/awscli/alias.py
+--- a/awscli/alias.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/alias.py	2022-05-18 14:15:22.645692302 +0200
+@@ -15,6 +15,8 @@
+ import shlex
+ import subprocess
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.configloader import raw_config_parse
+ 
+ from awscli.compat import compat_shell_quote
+diff --color -uNr a/awscli/argprocess.py b/awscli/argprocess.py
+--- a/awscli/argprocess.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/argprocess.py	2022-05-18 15:05:05.051719241 +0200
+@@ -15,6 +15,8 @@
+ import logging
+ from awscli.compat import six
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict, json
+ 
+ from awscli import SCALAR_TYPES, COMPLEX_TYPES
+diff --color -uNr a/awscli/arguments.py b/awscli/arguments.py
+--- a/awscli/arguments.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/arguments.py	2022-05-18 15:05:58.609003196 +0200
+@@ -38,6 +38,8 @@
+ """
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import xform_name
+ from botocore.hooks import first_non_none_response
+ 
+diff --color -uNr a/awscli/bcdoc/docstringparser.py b/awscli/bcdoc/docstringparser.py
+--- a/awscli/bcdoc/docstringparser.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/bcdoc/docstringparser.py	2022-05-18 15:05:52.052968430 +0200
+@@ -10,6 +10,8 @@
+ # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ # ANY KIND, either express or implied. See the License for the specific
+ # language governing permissions and limitations under the License.
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import six
+ 
+ 
+diff --color -uNr a/awscli/bcdoc/restdoc.py b/awscli/bcdoc/restdoc.py
+--- a/awscli/bcdoc/restdoc.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/bcdoc/restdoc.py	2022-05-18 15:05:43.172921339 +0200
+@@ -12,7 +12,10 @@
+ # language governing permissions and limitations under the License.
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict
++
+ from awscli.bcdoc.docstringparser import DocStringParser
+ from awscli.bcdoc.style import ReSTStyle
+ 
+diff --color -uNr a/awscli/clidocs.py b/awscli/clidocs.py
+--- a/awscli/clidocs.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/clidocs.py	2022-05-18 15:05:32.701865825 +0200
+@@ -12,6 +12,9 @@
+ # language governing permissions and limitations under the License.
+ import logging
+ import os
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import xform_name
+ from botocore.model import StringShape
+ from botocore.utils import is_json_value_header
+diff --color -uNr a/awscli/clidriver.py b/awscli/clidriver.py
+--- a/awscli/clidriver.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/clidriver.py	2022-05-18 15:04:57.775680666 +0200
+@@ -14,6 +14,7 @@
+ import signal
+ import logging
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ import botocore.session
+ from botocore import __version__ as botocore_version
+ from botocore.hooks import HierarchicalEmitter
+diff --color -uNr a/awscli/compat.py b/awscli/compat.py
+--- a/awscli/compat.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/compat.py	2022-05-18 15:06:11.402071034 +0200
+@@ -20,6 +20,7 @@
+ import signal
+ import contextlib
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import six
+ #import botocore.compat
+ 
+diff --color -uNr a/awscli/customizations/assumerole.py b/awscli/customizations/assumerole.py
+--- a/awscli/customizations/assumerole.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/assumerole.py	2022-05-18 15:00:35.635290775 +0200
+@@ -1,6 +1,8 @@
+ import os
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ProfileNotFound
+ from botocore.credentials import JSONFileCache
+ 
+diff --color -uNr a/awscli/customizations/awslambda.py b/awscli/customizations/awslambda.py
+--- a/awscli/customizations/awslambda.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/awslambda.py	2022-05-18 15:01:16.698508494 +0200
+@@ -14,6 +14,8 @@
+ import copy
+ from contextlib import closing
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.vendored import six
+ 
+ from awscli.arguments import CustomArgument, CLIArgument
+diff --color -uNr a/awscli/customizations/cloudformation/artifact_exporter.py b/awscli/customizations/cloudformation/artifact_exporter.py
+--- a/awscli/customizations/cloudformation/artifact_exporter.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudformation/artifact_exporter.py	2022-05-18 14:48:47.570545896 +0200
+@@ -19,6 +19,9 @@
+ import uuid
+ import shutil
+ from awscli.compat import six
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.utils import set_value_from_jmespath
+ 
+ from awscli.compat import urlparse
+diff --color -uNr a/awscli/customizations/cloudformation/deployer.py b/awscli/customizations/cloudformation/deployer.py
+--- a/awscli/customizations/cloudformation/deployer.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudformation/deployer.py	2022-05-18 14:48:59.107606518 +0200
+@@ -14,6 +14,7 @@
+ import sys
+ import time
+ import logging
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ import botocore
+ import collections
+ 
+diff --color -uNr a/awscli/customizations/cloudformation/deploy.py b/awscli/customizations/cloudformation/deploy.py
+--- a/awscli/customizations/cloudformation/deploy.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudformation/deploy.py	2022-05-18 14:49:08.967658328 +0200
+@@ -15,6 +15,7 @@
+ import sys
+ import logging
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.client import Config
+ 
+ from awscli.customizations.cloudformation import exceptions
+diff --color -uNr a/awscli/customizations/cloudformation/package.py b/awscli/customizations/cloudformation/package.py
+--- a/awscli/customizations/cloudformation/package.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudformation/package.py	2022-05-18 14:49:19.649714460 +0200
+@@ -17,6 +17,7 @@
+ 
+ import json
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.client import Config
+ 
+ from awscli.customizations.cloudformation.artifact_exporter import Template
+diff --color -uNr a/awscli/customizations/cloudformation/yamlhelper.py b/awscli/customizations/cloudformation/yamlhelper.py
+--- a/awscli/customizations/cloudformation/yamlhelper.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudformation/yamlhelper.py	2022-05-18 14:23:38.371279936 +0200
+@@ -10,6 +10,8 @@
+ # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ # ANY KIND, either express or implied. See the License for the specific
+ # language governing permissions and limitations under the License.
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import json
+ from botocore.compat import OrderedDict
+ 
+diff --color -uNr a/awscli/customizations/cloudfront.py b/awscli/customizations/cloudfront.py
+--- a/awscli/customizations/cloudfront.py	2022-05-18 15:11:13.004672889 +0200
++++ b/awscli/customizations/cloudfront.py	2022-05-18 14:52:36.034747887 +0200
+@@ -17,6 +17,8 @@
+ from cryptography.hazmat.primitives import serialization, hashes
+ from cryptography.hazmat.primitives.asymmetric import padding
+ from cryptography.hazmat.backends import default_backend
++
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.utils import parse_to_aware_datetime
+ from botocore.signers import CloudFrontSigner
+ 
+diff --color -uNr a/awscli/customizations/cloudsearch.py b/awscli/customizations/cloudsearch.py
+--- a/awscli/customizations/cloudsearch.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudsearch.py	2022-05-18 15:02:25.305872231 +0200
+@@ -14,6 +14,9 @@
+ import logging
+ 
+ from awscli.customizations.flatten import FlattenArguments, SEP
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict
+ 
+ LOG = logging.getLogger(__name__)
+diff --color -uNr a/awscli/customizations/cloudtrail/subscribe.py b/awscli/customizations/cloudtrail/subscribe.py
+--- a/awscli/customizations/cloudtrail/subscribe.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/cloudtrail/subscribe.py	2022-05-18 14:57:31.205312927 +0200
+@@ -17,6 +17,7 @@
+ from .utils import get_account_id
+ from awscli.customizations.commands import BasicCommand
+ from awscli.customizations.utils import s3_bucket_exists
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ 
+diff --color -uNr a/awscli/customizations/cloudtrail/validation.py b/awscli/customizations/cloudtrail/validation.py
+--- a/awscli/customizations/cloudtrail/validation.py	2022-05-18 15:11:13.005672894 +0200
++++ b/awscli/customizations/cloudtrail/validation.py	2022-05-18 14:57:49.441409616 +0200
+@@ -30,6 +30,7 @@
+ from awscli.customizations.cloudtrail.utils import get_trail_by_arn, \
+     get_account_id_from_arn
+ from awscli.customizations.commands import BasicCommand
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ from awscli.schema import ParameterRequiredError
+ 
+diff --color -uNr a/awscli/customizations/codeartifact/login.py b/awscli/customizations/codeartifact/login.py
+--- a/awscli/customizations/codeartifact/login.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/codeartifact/login.py	2022-05-18 15:01:49.458682184 +0200
+@@ -8,6 +8,8 @@
+ from datetime import datetime
+ from dateutil.tz import tzutc
+ from dateutil.relativedelta import relativedelta
++
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.utils import parse_timestamp
+ 
+ from awscli.compat import is_windows, urlparse, RawConfigParser, StringIO
+diff --color -uNr a/awscli/customizations/codecommit.py b/awscli/customizations/codecommit.py
+--- a/awscli/customizations/codecommit.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/codecommit.py	2022-05-18 14:52:27.556702937 +0200
+@@ -18,6 +18,7 @@
+ import fileinput
+ import datetime
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.auth import SigV4Auth
+ from botocore.awsrequest import AWSRequest
+ from botocore.compat import urlsplit
+diff --color -uNr a/awscli/customizations/codedeploy/deregister.py b/awscli/customizations/codedeploy/deregister.py
+--- a/awscli/customizations/codedeploy/deregister.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/codedeploy/deregister.py	2022-05-18 15:00:28.775254402 +0200
+@@ -13,6 +13,7 @@
+ 
+ import sys
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ from awscli.customizations.commands import BasicCommand
+diff --color -uNr a/awscli/customizations/codedeploy/push.py b/awscli/customizations/codedeploy/push.py
+--- a/awscli/customizations/codedeploy/push.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/codedeploy/push.py	2022-05-18 14:58:14.529542632 +0200
+@@ -18,6 +18,7 @@
+ import contextlib
+ from datetime import datetime
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ from awscli.compat import six
+diff --color -uNr a/awscli/customizations/commands.py b/awscli/customizations/commands.py
+--- a/awscli/customizations/commands.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/commands.py	2022-05-18 14:54:12.117257346 +0200
+@@ -1,6 +1,8 @@
+ import logging
+ import os
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import model
+ from botocore.compat import OrderedDict
+ from botocore.validate import validate_parameters
+diff --color -uNr a/awscli/customizations/configure/addmodel.py b/awscli/customizations/configure/addmodel.py
+--- a/awscli/customizations/configure/addmodel.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/configure/addmodel.py	2022-05-18 14:53:57.092177678 +0200
+@@ -13,6 +13,8 @@
+ import json
+ import os
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.model import ServiceModel
+ 
+ from awscli.customizations.commands import BasicCommand
+diff --color -uNr a/awscli/customizations/configure/configure.py b/awscli/customizations/configure/configure.py
+--- a/awscli/customizations/configure/configure.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/configure/configure.py	2022-05-18 14:53:50.435142381 +0200
+@@ -13,6 +13,8 @@
+ import os
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ProfileNotFound
+ 
+ from awscli.compat import compat_input
+diff --color -uNr a/awscli/customizations/configure/__init__.py b/awscli/customizations/configure/__init__.py
+--- a/awscli/customizations/configure/__init__.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/configure/__init__.py	2022-05-18 14:54:04.464216768 +0200
+@@ -11,6 +11,9 @@
+ # ANY KIND, either express or implied. See the License for the specific
+ # language governing permissions and limitations under the License.
+ import string
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.vendored.six.moves import shlex_quote
+ 
+ NOT_SET = '<not set>'
+diff --color -uNr a/awscli/customizations/datapipeline/createdefaultroles.py b/awscli/customizations/datapipeline/createdefaultroles.py
+--- a/awscli/customizations/datapipeline/createdefaultroles.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/datapipeline/createdefaultroles.py	2022-05-18 15:01:32.776593738 +0200
+@@ -25,6 +25,9 @@
+ from awscli.customizations.commands import BasicCommand
+ from awscli.customizations.datapipeline.translator \
+     import display_response, dict_to_string, get_region
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ LOG = logging.getLogger(__name__)
+diff --color -uNr a/awscli/customizations/ec2/addcount.py b/awscli/customizations/ec2/addcount.py
+--- a/awscli/customizations/ec2/addcount.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/ec2/addcount.py	2022-05-18 14:49:53.982894864 +0200
+@@ -12,6 +12,8 @@
+ # language governing permissions and limitations under the License.
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import model
+ 
+ from awscli.arguments import BaseCLIArgument
+diff --color -uNr a/awscli/customizations/ec2/decryptpassword.py b/awscli/customizations/ec2/decryptpassword.py
+--- a/awscli/customizations/ec2/decryptpassword.py	2022-05-18 15:11:13.005672894 +0200
++++ b/awscli/customizations/ec2/decryptpassword.py	2022-05-18 14:49:38.231812104 +0200
+@@ -18,6 +18,8 @@
+ from cryptography.hazmat.primitives.asymmetric import padding
+ from awscli.compat import six
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import model
+ 
+ from awscli.arguments import BaseCLIArgument
+diff --color -uNr a/awscli/customizations/ecs/deploy.py b/awscli/customizations/ecs/deploy.py
+--- a/awscli/customizations/ecs/deploy.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/ecs/deploy.py	2022-05-18 14:52:56.062854064 +0200
+@@ -16,6 +16,7 @@
+ import os
+ import sys
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import compat, config
+ from botocore.exceptions import ClientError
+ from awscli.compat import compat_open
+diff --color -uNr a/awscli/customizations/eks/get_token.py b/awscli/customizations/eks/get_token.py
+--- a/awscli/customizations/eks/get_token.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/eks/get_token.py	2022-05-18 15:04:44.775611742 +0200
+@@ -11,7 +11,11 @@
+ # ANY KIND, either express or implied. See the License for the specific
+ # language governing permissions and limitations under the License.
+ import base64
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ import botocore
++
+ import json
+ 
+ from datetime import datetime, timedelta
+diff --color -uNr a/awscli/customizations/eks/kubeconfig.py b/awscli/customizations/eks/kubeconfig.py
+--- a/awscli/customizations/eks/kubeconfig.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/eks/kubeconfig.py	2022-05-18 15:02:57.357042199 +0200
+@@ -15,6 +15,9 @@
+ import yaml
+ import logging
+ import errno
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict
+ 
+ from awscli.customizations.eks.exceptions import EKSError
+diff --color -uNr a/awscli/customizations/eks/ordered_yaml.py b/awscli/customizations/eks/ordered_yaml.py
+--- a/awscli/customizations/eks/ordered_yaml.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/eks/ordered_yaml.py	2022-05-18 15:03:07.700097040 +0200
+@@ -12,6 +12,9 @@
+ # language governing permissions and limitations under the License.
+ 
+ import yaml
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict
+ 
+ 
+diff --color -uNr a/awscli/customizations/eks/update_kubeconfig.py b/awscli/customizations/eks/update_kubeconfig.py
+--- a/awscli/customizations/eks/update_kubeconfig.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/eks/update_kubeconfig.py	2022-05-18 15:02:33.627916357 +0200
+@@ -14,6 +14,8 @@
+ import os
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict
+ 
+ from awscli.customizations.commands import BasicCommand
+diff --color -uNr a/awscli/customizations/emr/createcluster.py b/awscli/customizations/emr/createcluster.py
+--- a/awscli/customizations/emr/createcluster.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/emr/createcluster.py	2022-05-18 14:50:20.302033141 +0200
+@@ -27,6 +27,9 @@
+ from awscli.customizations.emr.command import Command
+ from awscli.customizations.emr.constants import EC2_ROLE_NAME
+ from awscli.customizations.emr.constants import EMR_ROLE_NAME
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import json
+ 
+ 
+diff --color -uNr a/awscli/customizations/emr/createdefaultroles.py b/awscli/customizations/emr/createdefaultroles.py
+--- a/awscli/customizations/emr/createdefaultroles.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/emr/createdefaultroles.py	2022-05-18 14:51:39.802450842 +0200
+@@ -13,6 +13,9 @@
+ 
+ import logging
+ import re
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ import botocore.exceptions
+ import botocore.session
+ from botocore import xform_name
+diff --color -uNr a/awscli/customizations/emr/describecluster.py b/awscli/customizations/emr/describecluster.py
+--- a/awscli/customizations/emr/describecluster.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/emr/describecluster.py	2022-05-18 14:51:06.268274647 +0200
+@@ -16,6 +16,9 @@
+ from awscli.customizations.emr import emrutils
+ from awscli.customizations.emr import helptext
+ from awscli.customizations.emr.command import Command
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import NoCredentialsError
+ 
+ 
+diff --color -uNr a/awscli/customizations/emr/emrfsutils.py b/awscli/customizations/emr/emrfsutils.py
+--- a/awscli/customizations/emr/emrfsutils.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/emr/emrfsutils.py	2022-05-18 14:50:56.051220965 +0200
+@@ -14,6 +14,9 @@
+ from awscli.customizations.emr import constants
+ from awscli.customizations.emr import emrutils
+ from awscli.customizations.emr import exceptions
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import OrderedDict
+ 
+ 
+diff --color -uNr a/awscli/customizations/emr/emrutils.py b/awscli/customizations/emr/emrutils.py
+--- a/awscli/customizations/emr/emrutils.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/emr/emrutils.py	2022-05-18 14:51:30.094399834 +0200
+@@ -19,6 +19,9 @@
+ from awscli.clidriver import CLIOperationCaller
+ from awscli.customizations.emr import constants
+ from awscli.customizations.emr import exceptions
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import WaiterError, NoCredentialsError
+ from botocore import xform_name
+ 
+diff --color -uNr a/awscli/customizations/emr/sshutils.py b/awscli/customizations/emr/sshutils.py
+--- a/awscli/customizations/emr/sshutils.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/emr/sshutils.py	2022-05-18 14:51:18.184337257 +0200
+@@ -16,6 +16,9 @@
+ from awscli.customizations.emr import exceptions
+ from awscli.customizations.emr import emrutils
+ from awscli.customizations.emr import constants
++
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import WaiterError
+ 
+ LOG = logging.getLogger(__name__)
+diff --color -uNr a/awscli/customizations/generatecliskeleton.py b/awscli/customizations/generatecliskeleton.py
+--- a/awscli/customizations/generatecliskeleton.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/generatecliskeleton.py	2022-05-18 15:01:09.940472663 +0200
+@@ -13,6 +13,7 @@
+ import json
+ import sys
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import xform_name
+ from botocore.stub import Stubber
+ from botocore.utils import ArgumentGenerator
+diff --color -uNr a/awscli/customizations/globalargs.py b/awscli/customizations/globalargs.py
+--- a/awscli/customizations/globalargs.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/globalargs.py	2022-05-18 14:53:15.719958294 +0200
+@@ -13,6 +13,7 @@
+ import sys
+ import os
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.client import Config
+ from botocore.endpoint import DEFAULT_TIMEOUT
+ from botocore.handlers import disable_signing
+diff --color -uNr a/awscli/customizations/history/db.py b/awscli/customizations/history/db.py
+--- a/awscli/customizations/history/db.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/history/db.py	2022-05-18 14:57:15.844231482 +0200
+@@ -18,6 +18,8 @@
+ import logging
+ from awscli.compat import collections_abc
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.history import BaseHistoryHandler
+ 
+ from awscli.compat import sqlite3
+diff --color -uNr a/awscli/customizations/history/__init__.py b/awscli/customizations/history/__init__.py
+--- a/awscli/customizations/history/__init__.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/history/__init__.py	2022-05-18 14:57:23.122270071 +0200
+@@ -14,6 +14,7 @@
+ import sys
+ import logging
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.history import get_global_history_recorder
+ from botocore.exceptions import ProfileNotFound
+ 
+diff --color -uNr a/awscli/customizations/opsworks.py b/awscli/customizations/opsworks.py
+--- a/awscli/customizations/opsworks.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/opsworks.py	2022-05-18 14:58:01.524473681 +0200
+@@ -22,6 +22,8 @@
+ import tempfile
+ import textwrap
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ from awscli.compat import shlex_quote, urlopen, ensure_text_type
+diff --color -uNr a/awscli/customizations/paginate.py b/awscli/customizations/paginate.py
+--- a/awscli/customizations/paginate.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/paginate.py	2022-05-18 14:57:07.660188087 +0200
+@@ -26,6 +26,8 @@
+ import logging
+ from functools import partial
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import xform_name
+ from botocore.exceptions import DataNotFoundError, PaginationError
+ from botocore import model
+diff --color -uNr a/awscli/customizations/s3/filegenerator.py b/awscli/customizations/s3/filegenerator.py
+--- a/awscli/customizations/s3/filegenerator.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/s3/filegenerator.py	2022-05-18 15:01:03.797440093 +0200
+@@ -16,6 +16,8 @@
+ 
+ from dateutil.parser import parse
+ from dateutil.tz import tzlocal
++
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ from awscli.customizations.s3.utils import find_bucket_key, get_file_stat
+diff --color -uNr a/awscli/customizations/s3/subcommands.py b/awscli/customizations/s3/subcommands.py
+--- a/awscli/customizations/s3/subcommands.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/s3/subcommands.py	2022-05-18 15:00:50.120367577 +0200
+@@ -14,6 +14,7 @@
+ import logging
+ import sys
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.client import Config
+ from dateutil.parser import parse
+ from dateutil.tz import tzlocal
+diff --color -uNr a/awscli/customizations/s3uploader.py b/awscli/customizations/s3uploader.py
+--- a/awscli/customizations/s3uploader.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/s3uploader.py	2022-05-18 15:00:42.217325673 +0200
+@@ -17,6 +17,7 @@
+ import os
+ import sys
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ import botocore
+ import botocore.exceptions
+ from s3transfer.manager import TransferManager
+diff --color -uNr a/awscli/customizations/scalarparse.py b/awscli/customizations/scalarparse.py
+--- a/awscli/customizations/scalarparse.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/scalarparse.py	2022-05-18 14:55:04.471534925 +0200
+@@ -27,6 +27,8 @@
+ in the future.
+ 
+ """
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.utils import parse_timestamp
+ from botocore.exceptions import ProfileNotFound
+ 
+diff --color -uNr a/awscli/customizations/servicecatalog/generateproduct.py b/awscli/customizations/servicecatalog/generateproduct.py
+--- a/awscli/customizations/servicecatalog/generateproduct.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/servicecatalog/generateproduct.py	2022-05-18 14:52:05.845587829 +0200
+@@ -16,6 +16,8 @@
+ from awscli.customizations.servicecatalog import helptext
+ from awscli.customizations.servicecatalog.generatebase \
+     import GenerateBaseCommand
++
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import json
+ 
+ 
+diff --color -uNr a/awscli/customizations/servicecatalog/generateprovisioningartifact.py b/awscli/customizations/servicecatalog/generateprovisioningartifact.py
+--- a/awscli/customizations/servicecatalog/generateprovisioningartifact.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/servicecatalog/generateprovisioningartifact.py	2022-05-18 14:52:14.589634188 +0200
+@@ -16,6 +16,8 @@
+ from awscli.customizations.servicecatalog import helptext
+ from awscli.customizations.servicecatalog.generatebase \
+     import GenerateBaseCommand
++
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import json
+ 
+ 
+diff --color -uNr a/awscli/customizations/streamingoutputarg.py b/awscli/customizations/streamingoutputarg.py
+--- a/awscli/customizations/streamingoutputarg.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/streamingoutputarg.py	2022-05-18 14:55:30.712674053 +0200
+@@ -10,6 +10,8 @@
+ # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ # ANY KIND, either express or implied. See the License for the specific
+ # language governing permissions and limitations under the License.
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.model import Shape
+ 
+ from awscli.arguments import BaseCLIArgument
+diff --color -uNr a/awscli/customizations/utils.py b/awscli/customizations/utils.py
+--- a/awscli/customizations/utils.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/utils.py	2022-05-18 14:55:17.170602253 +0200
+@@ -17,6 +17,7 @@
+ import copy
+ import sys
+ 
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.exceptions import ClientError
+ 
+ 
+diff --color -uNr a/awscli/customizations/waiters.py b/awscli/customizations/waiters.py
+--- a/awscli/customizations/waiters.py	2022-04-27 20:06:58.000000000 +0200
++++ b/awscli/customizations/waiters.py	2022-05-18 14:53:22.822995963 +0200
+@@ -10,6 +10,8 @@
+ # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ # ANY KIND, either express or implied. See the License for the specific
+ # language governing permissions and limitations under the License.
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore import xform_name
+ from botocore.exceptions import DataNotFoundError
+ 
+diff --color -uNr a/awscli/formatter.py b/awscli/formatter.py
+--- a/awscli/formatter.py	2022-04-27 20:07:02.000000000 +0200
++++ b/awscli/formatter.py	2022-05-18 14:23:26.704218495 +0200
+@@ -12,6 +12,8 @@
+ # language governing permissions and limitations under the License.
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.compat import json
+ 
+ from botocore.utils import set_value_from_jmespath
+diff --color -uNr a/awscli/paramfile.py b/awscli/paramfile.py
+--- a/awscli/paramfile.py	2022-04-27 20:07:02.000000000 +0200
++++ b/awscli/paramfile.py	2022-05-18 15:04:51.330646496 +0200
+@@ -14,6 +14,8 @@
+ import os
+ import copy
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.awsrequest import AWSRequest
+ from botocore.httpsession import URLLib3Session
+ from botocore.exceptions import ProfileNotFound
+diff --color -uNr a/awscli/plugin.py b/awscli/plugin.py
+--- a/awscli/plugin.py	2022-04-27 20:07:02.000000000 +0200
++++ b/awscli/plugin.py	2022-05-18 15:06:18.780110157 +0200
+@@ -12,6 +12,8 @@
+ # language governing permissions and limitations under the License.
+ import logging
+ 
++import sys
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.hooks import HierarchicalEmitter
+ 
+ log = logging.getLogger('awscli.plugin')
+diff --color -uNr a/awscli/testutils.py b/awscli/testutils.py
+--- a/awscli/testutils.py	2022-04-27 20:07:02.000000000 +0200
++++ b/awscli/testutils.py	2022-05-18 14:15:04.600600462 +0200
+@@ -39,6 +39,7 @@
+ 
+ 
+ from awscli.compat import six
++sys.path.insert(0, '/usr/lib/fence-agents/bundled/aws')
+ from botocore.session import Session
+ from botocore.exceptions import ClientError
+ from botocore.exceptions import WaiterError
